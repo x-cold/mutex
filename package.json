@@ -1,6 +1,6 @@
 {
   "name": "js-mutex",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "A library template writing by ts",
   "main": "dist/index.umd.js",
   "module": "dist/index.es5.js",
