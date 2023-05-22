@@ -7,10 +7,10 @@
 
 [npm-image]: https://img.shields.io/npm/v/js-mutex.svg?style=flat-square
 [npm-url]: https://npmjs.org/package/js-mutex
-[gitflow-image]: https://github.com/x-cold/js-mutex/actions/workflows/test.yml/badge.svg?branch=master
-[gitflow-url]: https://github.com/x-cold/js-mutex/actions/workflows/test.yml
-[codecov-image]: https://codecov.io/gh/x-cold/js-mutex/branch/master/graph/badge.svg
-[codecov-url]: https://codecov.io/gh/x-cold/js-mutex
+[gitflow-image]: https://github.com/x-cold/mutex/actions/workflows/test.yml/badge.svg?branch=master
+[gitflow-url]: https://github.com/x-cold/mutex/actions/workflows/test.yml
+[codecov-image]: https://codecov.io/gh/x-cold/mutex/branch/master/graph/badge.svg
+[codecov-url]: https://codecov.io/gh/x-cold/mutex
 [download-image]: https://badgen.net/npmnpm/dt/js-mutex
 [download-url]: https://npmjs.org/package/js-mutex
 
