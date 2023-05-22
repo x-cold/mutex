@@ -15,6 +15,7 @@ describe('Mutex test', () => {
     let cur = 0;
     await mutex.lock();
     cur = 1;
+    expect(mutex.isLocked()).toBe(true);
     await mutex.unlock();
     expect(cur).toBe(1);
   });
