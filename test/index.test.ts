@@ -1,19 +1,51 @@
-import mylib from '../src';
-import { getTime } from '../src/utils';
+import Mutex from '../src';
+
+async function sleep(ms: number) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, ms);
+  });
+}
 
 /**
- * Dummy test
+ * Mutex test
  */
-describe('Dummy test', () => {
-  it('works if true is truthy', () => {
-    expect(true).toBeTruthy();
+describe('Mutex test', () => {
+  it('wait for lock', async () => {
+    const mutex = new Mutex();
+    let cur = 0;
+    await mutex.lock();
+    cur = 1;
+    await mutex.unlock();
+    expect(cur).toBe(1);
   });
 
-  it('mylib is instantiable', () => {
-    expect(mylib).toBeInstanceOf(Object);
+  it('wait for lock concurrency', async () => {
+    const mutex = new Mutex();
+    const result: number[] = [];
+
+    async function fn(i: number) {
+      await mutex.lock();
+      await sleep(100);
+      result.push(i);
+      await mutex.unlock();
+    }
+
+    const promises = [];
+    for (let i = 0; i < 10; i += 1) {
+      promises.push(fn(i));
+    }
+
+    await Promise.all(promises);
+    expect(result.length).toEqual(10);
+    expect(result).toEqual([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
   });
 
-  it('mylib is instantiable', () => {
-    expect(typeof getTime()).toEqual('number');
+  it('acquire lock', async () => {
+    const mutex = new Mutex();
+    let cur = 0;
+    await mutex.acquire(async () => {
+      cur = 1;
+    });
+    expect(cur).toBe(1);
   });
 });
