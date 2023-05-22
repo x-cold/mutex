@@ -1,6 +1,9 @@
+type Resolve = () => void;
+
 class Mutex {
   private locked: boolean;
-  private queue: Function[];
+
+  private queue: Resolve[] = [];
 
   constructor() {
     this.locked = false;
@@ -39,14 +42,10 @@ class Mutex {
     try {
       result = await fn();
       return result;
-    } catch(e) {
-      return Promise.reject(e);
-    }
-    finally {
-      this.unlock();
+    } finally {
+      await this.unlock();
     }
   }
 }
 
 export default Mutex;
-
