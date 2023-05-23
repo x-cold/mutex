@@ -11,7 +11,7 @@
 [gitflow-url]: https://github.com/x-cold/mutex/actions/workflows/test.yml
 [codecov-image]: https://codecov.io/gh/x-cold/mutex/branch/master/graph/badge.svg
 [codecov-url]: https://codecov.io/gh/x-cold/mutex
-[download-image]: https://badgen.net/npmnpm/dt/js-mutex
+[download-image]: https://badgen.net/npm/dt/js-mutex
 [download-url]: https://npmjs.org/package/js-mutex
 
 A modern lightweight lib to control the promise mutex
