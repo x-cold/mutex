@@ -75,4 +75,34 @@ describe('Mutex test', () => {
     await Promise.all([promise1.catch(() => Promise.resolve()), promise2]);
     expect(cur).toBe(2);
   });
+
+  it('Should only allow one call at a time to a given function', async () => {
+    const mutex = new Mutex();
+
+    const startTimes: Record<string, number> = {};
+    const endTimes: Record<string, number> = {};
+
+    // f is our function that we expect to only be executed one at a time.
+    const fn = async (taskName: string) => {
+      const result = await mutex.acquire(async () => {
+        startTimes[taskName] = Date.now();
+        await sleep(25);
+        endTimes[taskName] = Date.now();
+        return taskName;
+      });
+      return result;
+    };
+
+    const startTime = Date.now();
+    const results = await Promise.all([fn('a'), fn('b'), fn('c')]);
+    expect(results).toEqual(['a', 'b', 'c']); // Make sure each function returns the right value
+
+    expect(endTimes.a).toBeGreaterThan(startTimes.a); // Sanity check
+    expect(startTimes.b).toBeGreaterThanOrEqual(endTimes.a); // B needs to start after A has ended
+    expect(startTimes.c).toBeGreaterThanOrEqual(endTimes.b); // C needs to start after B has ended
+
+    // If we actually performed this in sequence, then the total time should be at
+    //  least (time for one function) * (time per function) = 25*3
+    expect(Date.now() - startTime).toBeGreaterThan(75);
+  });
 });
